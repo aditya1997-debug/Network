@@ -1,0 +1,50 @@
+{% extends "network/layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+<script src="https://cdn.tailwindcss.com"></script>
+
+{% for i in posts %}
+    <div id="all-posts" class="mx-auto">
+        <div class="card-body">
+            <h5 class="card-title"><a id="user"  href="{% url 'profile' i.name %}"><strong class="text-sky-600">{{i.user}}</strong></a>
+            <small>{{i.date_posted  }}</small></h5>
+            <p class="card-text">{{i.post}}</p>
+
+            <!-- like/unlike -->
+            <div id="like_{{i.id}}" class="flex justify-start">
+                {% if request.user not in i.liked_by.all %}
+                <img onclick="like({{ i.id }})" class="justify-self-start" id="image_{{ i.id }}" src = "static/images/white.svg" width="20px" height="20px">
+                {% else %}
+                <img onclick="like({{ i.id }})" class="justify-self-start" id="image_{{ i.id }}" src = "static/images/red.svg" width="20px" height="20px">
+                {% endif %}
+                  &nbsp;
+                  <h6 id="count_{{ i.id }}" class="my-2"> {{ i.likes }}</h6>
+            </div>
+            
+        </div>
+        <hr class="hr">
+    </div>
+
+{% endfor %}
+
+{% if posts %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm justify-content-end">
+        {% if posts.has_previous %}
+        <li class="page-item"><a class="page-link text-dark" href="?page=1">&laquo; first</a></li>
+        <li class="page-item"><a class="page-link text-dark" href="?page={{ posts.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        
+        <li class="page-link text-dark"> Page {{ posts.number }} of {{ posts.paginator.num_pages }} </li>
+        
+
+        {% if posts.has_next %}
+            <li class="page-item"><a class="page-link text-dark" href="?page={{ posts.next_page_number }}">next</a> </li>
+            <li class="page-item"> <a class="page-link text-dark" href="?page={{ posts.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endblock %}
+

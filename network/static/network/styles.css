@@ -1,0 +1,67 @@
+body {
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    letter-spacing: 0.8px;
+    
+}
+
+.form
+{
+    margin-left: 10%;
+    padding: 30px 80px 20px 80px;
+    
+}
+
+#all-posts
+{
+    position: relative;
+    width: 55rem;
+    margin-left: 12%;
+    background-color: transparent;
+    padding: 30px 20px 0px 20px;
+    
+
+}
+
+.inputfield{
+    border-bottom: #778899;
+    border-style: solid;
+    padding-left: 5px;
+    outline: none;
+}
+
+#user:hover{
+    text-decoration: none;
+    color: black;
+    cursor:pointer;
+}
+
+.edit_btn{
+    position: absolute;
+    top: 3rem;
+    right : 0rem;
+    
+}
+
+.edit_btn:focus {
+    outline:0px
+}
+
+.follow:hover {
+    cursor: pointer;
+}
+
+.delete_btn{
+    position: absolute;
+    top: 3rem;
+    right : 3rem;
+}
+
+.delete_btn:focus{
+    outline:0px
+}
+
+.hr{
+    background-color: rgba(0, 0, 0, 0.151);
+}

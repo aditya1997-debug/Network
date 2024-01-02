@@ -1,0 +1,109 @@
+{% extends "network/layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="flex justify-center">
+    <h1 class="text-3xl">{{ person }}</h1>
+</div>
+    <div class="flex mx-auto justify-center">
+        <small class="text-lg follow" data-toggle="modal" data-target="#followers"> {{ person.followed_by.all.count }} followers </small>
+        &nbsp;&nbsp;&nbsp;
+        <small class="text-lg follow" data-toggle="modal" data-target="#exampleModalLong"> {{ person.following.all.count }} following </small>
+        &nbsp;&nbsp;&nbsp;
+        {% if person != request.user %}
+        <form action="{% url 'follow' person %}" method="POST">
+            {% csrf_token %}
+            {% if person in following_list.following.all %}
+                    <button name="follow" value="unfollow" class="bg-sky-600 text-white border-sky-600 border-2 focus:outline-none rounded w-21 px-3 hover:bg-sky-900 hover:border-sky-900">
+                        Unfollow
+                    </button>
+            {% else %}
+                    <button name="follow" value="follow" class="bg-sky-600 text-white border-sky-600 border-2 focus:outline-none rounded w-21 px-3 hover:bg-sky-900 hover:border-sky-900">
+                        Follow
+                    </button>
+            {% endif %}
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="flex justify-start mt-5">
+        <h6 class="text-2xl mx-auto"></h6>
+    </div>
+    {% for post in UserProfile %}
+    <div id="all-posts" class="mx-auto post-container-{{ post.id }}">
+      <div id="hover_{{post.id}}" class="card-body">
+          <h5 class="card-title "><a id="user" href="{% url 'profile' post.name %}"><strong class="text-sky-600">{{post.user}}</strong></a>
+          <small>{{post.date_posted }}</small></h5> 
+          <div id="text-content">
+              <p id='post_want_to_edit_{{ post.id }}' class="card-text ">{{post.post}}</p>
+                <br>
+                <div id="like_{{post.id}}" class="flex justify-start">
+                  {% if request.user not in post.liked_by.all %}
+                  <img onclick="like({{ post.id }})" class="justify-self-start" id="image_{{ post.id }}" src = "/static/images/white.svg" width="20px" height="20px">
+                  {% else %}
+                  <img onclick="like({{ post.id }})" class="justify-self-start" id="image_{{ post.id }}" src = "/static/images/red.svg" width="20px" height="20px">
+                  {% endif %}
+                    &nbsp;
+                    <h6 id="count_{{ post.id }}" class="my-2"> {{ post.likes }}</h6>
+                </div>
+          </div>
+
+          <!-- Edit functionality -->
+
+          {% if user.is_authenticated %}
+              {% if post.user == request.user %}
+                <button class="border-red-900 border hover:bg-sky-700 hover:text-white
+                 text-slate-600 font-bold px-1 rounded tracking-widest text-xs   edit_btn" id="edit_{{post.id}}" onclick="second({{post.id}})">Edit</button>
+
+                 <button class="border-red-900 border hover:bg-red-700 hover:text-white
+                   text-slate-600 font-bold px-1 rounded tracking-widest text-xs delete_btn" id="delete_{{post.id}}" onclick="delete_post({{post.id}})">Delete</button>
+              {% endif %}
+          {% endif %}
+          
+      </div>
+      <hr class="hr">
+    </div>
+    {% endfor %}
+    <!-- Followers list-->
+    <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="followersTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="followersTitle">Followers</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for i in person.followed_by.all %}
+                    <h1>{{ i }}</h1>
+                    &nbsp;
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <!--Following list-->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Following</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {% for i in person.following.all %}
+                    <h1>{{ i }}</h1>
+                    &nbsp;
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
