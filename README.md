@@ -6,5 +6,26 @@ A user can make posts, edit posts, delete posts, like and unlike posts, follow a
 #Link to the youtube video
 https://youtu.be/I6UAnPrGiIE?si=YTDZIglYj2kAdH7n
 
-#How to run the project
-```pip install django-crispy-forms``` ----> ```python manage.py runserver```
+# How to run your application
+
+**Prerequisites**:\
+Make sure you have the following installed:
+- Python (3.6 or higher)
+- Django framework
+
+**Clone the repository**
+```
+git clone <repository-url>
+cd <repository-directory>
+```
+
+**Install crispy-forms**
+```
+pip install django-crispy-forms
+
+```
+**Run the Development Server:**
+```
+python manage.py runserver
+
+```
