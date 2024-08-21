@@ -9,11 +9,10 @@ https://youtu.be/I6UAnPrGiIE?si=YTDZIglYj2kAdH7n
 **Prerequisites**:\
 Make sure you have the following installed:
 - Python (3.6 or higher)
-- Django framework version 3.2
-
 
 **Other Installations**
 ```
+pip install django==3.2
 pip install django-crispy-forms==1.11.2
 pip install django-debug-toolbar==3.2.4
 ```
