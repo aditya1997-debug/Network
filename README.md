@@ -11,19 +11,19 @@ Make sure you have the following installed:
 - Python (3.6 or higher)
 - Django framework version 3.2
 
+
+**Other Installations**
+```
+pip install django-crispy-forms==1.11.2
+pip install django-debug-toolbar==3.2.4
+```
+
 **Clone the repository**
 ```
 git clone <repository-url>
 cd <repository-directory>
 ```
 
-**Installations**
-```
-pip install django==3.2
-pip install django-crispy-forms==1.11.2
-pip install django-debug-toolbar==3.2.4
-
-```
 **Run the Development Server:**
 ```
 python manage.py runserver
