@@ -10,7 +10,7 @@ import json
 from .models import User, Post
 from .forms import Postform
 
-
+@login_required(login_url='login')
 def index(request):
     if request.method == 'POST':
         form = Postform(request.POST)
