@@ -4,6 +4,9 @@ A user can make posts, edit posts, delete posts, like and unlike posts, follow a
 **Link to the youtube video**
 https://youtu.be/I6UAnPrGiIE?si=YTDZIglYj2kAdH7n
 
+**Deployed on Amazon EC2**
+http://16.171.129.151/login?next=/
+
 # How to run your application
 
 **Prerequisites**:\
