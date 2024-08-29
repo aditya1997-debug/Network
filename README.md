@@ -13,7 +13,13 @@ http://16.171.129.151/login?next=/
 Make sure you have the following installed:
 - Python (3.6 or higher)
 
-**Other Installations**
+**Create a Virtual environment**
+```python -m venv env```
+
+**Activate your environement**
+```env\Scripts\activate```
+
+**Install these requirements**
 ```
 pip install django==3.2
 pip install django-crispy-forms==1.11.2
