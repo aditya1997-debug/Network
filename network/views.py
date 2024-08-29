@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 import json
+import re
 
 from .models import User, Post
 from .forms import Postform
@@ -52,15 +53,37 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "").strip()
+        confirmation = request.POST.get("confirmation", "").strip()
 
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        if not username:
+            return render(request, "network/register.html", {
+                "message": "Username cannot be blank."
+                
+            })
+
+        if not email:
+            return render(request, "network/register.html", {
+                "message": "Email cannot be blank."
+                
+            })
+
+        if not password:
+            return render(request, "network/register.html", {
+                "message": "Password cannot be blank."
+               
+            })
+
         if password != confirmation:
             return render(request, "network/register.html", {
                 "message": "Passwords must match."
+            })
+
+        if not re.match(r'^[a-zA-Z0-9]+$', username):
+            return render(request, "network/register.html", {
+                "message": "Username should only contain numbers and alphabets."
             })
 
         # Attempt to create new user
@@ -69,10 +92,11 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "Username already taken."
+                "message": "Username already taken."           
             })
+
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return redirect(reverse("index"))
     else:
         return render(request, "network/register.html")
 
